@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "5707e506-3056-490f-9402-eba14a530760",
+		"name": "WarehousePostmanCollection",
+		"description": "Коллекция запросов для веб приложения склада.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24871096"
+	},
+	"item": [
+		{
+			"name": "CreateProduct Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Товар01\",\r\n  \"articleNumber\": \"05ST74M1O\",\r\n  \"description\": \"Описание товара...\",\r\n  \"category\": \"Категория0\",\r\n  \"price\": 450,\r\n  \"quantity\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product"
+					]
+				},
+				"description": "### POST /product\n\nИспользуется для создания товара.\n\n#### Тело запроса\n\n- name (string, required): Название товара.\n    \n- articleNumber (string, required): Артикул товара.\n    \n- description (string, required): Описание товара.\n    \n- category (string, required): категория товара.\n    \n- price (number, required): Цена товара.\n    \n- quantity (number, required): Кол-во товара.\n    \n\n#### Ответ\n\nУспешный запрос возвращает 200 код"
+			},
+			"response": []
+		},
+		{
+			"name": "GetProductList Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is not null\", function () {\r",
+							"  pm.expect(pm.response.text()).to.not.equal(\"null\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Save product id to env\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.expect(jsonResponse.length).to.be.above(0, \"No products found\");\r",
+							"    var firstProductId = jsonResponse[0].id;\r",
+							"    pm.environment.set(\"uuid\", firstProductId);\r",
+							"    console.log(\"UUID saved: \" + firstProductId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product"
+					]
+				},
+				"description": "### GET /product\n\nИспользуется для получения списка товаров.\n\n#### Ответ\n\nУспешный запрос возвращает 200 код"
+			},
+			"response": []
+		},
+		{
+			"name": "GetProduct Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"{{uuid}}"
+					]
+				},
+				"description": "### GET /product/id\n\nИспользуется для получения товара по его id.\n\n#### Ответ\n\nУспешный запрос возвращает 201 код"
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProduct Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Is updated\", function () {\r",
+							"    var requestBody = pm.request.body.raw ? JSON.parse(pm.request.body.raw) : {};\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseBody.name).to.eql(requestBody.name);\r",
+							"    pm.expect(responseBody.articleNumber).to.eql(requestBody.articleNumber);\r",
+							"    pm.expect(responseBody.description).to.eql(requestBody.description);\r",
+							"    pm.expect(responseBody.category).to.eql(requestBody.category);\r",
+							"    pm.expect(responseBody.price).to.eql(requestBody.price);\r",
+							"    pm.expect(responseBody.quantity).to.eql(requestBody.quantity);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Товар11\",\r\n  \"articleNumber\": \"05ST74M1O\",\r\n  \"description\": \"Описание товара...\",\r\n  \"category\": \"Категория0\",\r\n  \"price\": 500,\r\n  \"quantity\": 25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"{{uuid}}"
+					]
+				},
+				"description": "### PUT /product/id\n\nИспользуется для изменения товара.\n\n#### Тело запроса\n\n- name (string, required): Название товара.\n    \n- articleNumber (string, required): Артикул товара.\n    \n- description (string, required): Описание товара.\n    \n- category (string, required): категория товара.\n    \n- price (number, required): Цена товара.\n    \n- quantity (number, required): Кол-во товара.\n    \n\n#### Ответ\n\nУспешный запрос возвращает 200 код"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProduct Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response status code is 204\", function () {\r",
+							"  pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"{{uuid}}"
+					]
+				},
+				"description": "### DELETE /product/id\n\nИспользуется для удаления товара по его id.\n\n#### Ответ\n\nУспешный запрос возвращает 201 код"
+			},
+			"response": []
+		}
+	]
+}

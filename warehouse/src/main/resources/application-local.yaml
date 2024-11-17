@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/warehouse_db
+    username: postgres
+    password: "postgres"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show_sql: true
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    path: /v3/api-docs
